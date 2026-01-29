@@ -1,12 +1,10 @@
 # Especificação de Requisitos – Django ToDoList
 
-Especificação de Requisitos – Django ToDoList
-
-1. Introdução
+## 1. Introdução
 
 Esta documentação apresenta a especificação técnica da aplicação Django ToDoList, destinada a equipas técnicas envolvidas no desenvolvimento, QA, segurança e treinamento. O objetivo é fornecer uma referência clara sobre requisitos, casos de uso, modelos de dados, navegação e interfaces, garantindo alinhamento entre todas as áreas envolvidas.
 
-2. Descrição da Aplicação
+## 2. Descrição da Aplicação
 
 A Django ToDoList é uma aplicação web para gestão de tarefas pessoais, oferecendo funcionalidades como registo e autenticação de utilzadores, operações CRUD de tarefas e associação de tarefas ao utilizador autenticado. Os principais ativos contemplam credenciais, dados das tarefas, sessões autenticadas e a base de dados.
 
@@ -18,7 +16,7 @@ Gestão de sessões autenticadas
 
 Proteções básicas de segurança
 
-3. Requisitos Funcionais
+## 3. Requisitos Funcionais
 
 RF01: Registo de utilizadores
 
@@ -34,7 +32,9 @@ RF06: Eliminação de tarefas próprias
 
 RF06: Alteração de Estado (Pendente, Concluída) de tarefas próprias
 
-4. Casos de Uso
+## 4. Casos de Uso
+
+![image1.png](images/image1.png)
 
 UC01 – Registar Utilizador: permite criar utilizador com permissões para aceder ao sistema de gestão de tarefas.
 
@@ -52,13 +52,15 @@ UC3.3. – Alterar estado tarefa (Pendente, Concluída)
 
 UC5 – Logout: permite encerrar a sessão e retornar ao ecrã de Login.
 
-5. Quadro Explicativo dos Casos de Uso
+## 5. Quadro Explicativo dos Casos de Uso
 
-7. Dicionário de Dados 
+## 7. Dicionário de Dados 
 
 A estrutura da tabela de Tarefas está representada abaixo:
 
-8. Navegação da Aplicação
+![image2.png](images/image2.png)
+
+## 8. Navegação da Aplicação
 
 Ecrã de Registo: Cadastro de novo utilizador.
 
@@ -70,27 +72,33 @@ Ecrã de Criação/Edição de Tarefa: Formulário para inserir ou alterar dados
 
 Fluxo: Após login, utilizador é redirecionado à lista de tarefas, podendo navegar para criar, editar ou apagar tarefas.
 
-9. Desenho das Interfaces
+## 9. Desenho das Interfaces
 
-1. Login:
+### 1. Login:
 
 Campos: utilizador, password
 
 Botão: Entrar
 
+![image3.png](images/image3.png)
+
 Link: Registo de novo utilizador
 
-2. Gestão de Tarefas:
+### 2. Gestão de Tarefas:
 
 Exibição em tabela: título, Estadi, ações (alternar, editar, apagar)
 
 Botão: Nova tarefa
 
-3. Criação/Edição:
+![image4.png](images/image4.png)
+
+### 3. Criação/Edição:
 
 Campos: título, descrição
 
 Botões: Guardar
+
+![image5.png](images/image5.png)
 
 
 ## Imagens Extraídas
