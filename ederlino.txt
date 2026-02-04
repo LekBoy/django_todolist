@@ -1,2 +1,2 @@
-### uuuugit operations exercisepppppp
+### git operations exercise
 ### add line 2
