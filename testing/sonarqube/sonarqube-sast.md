@@ -12,7 +12,7 @@ Guia rápido para levantar o **SonarQube + Postgres via Docker Compose** (arquiv
 4. [Preparar variáveis (.env)](#4️⃣-preparar-variáveis-env)
 5. [Subir o stack com Docker Compose](#5️⃣-subir-o-stack-com-docker-compose)
 6. [Primeiro acesso e configuração inicial](#6️⃣-primeiro-acesso-e-configuração-inicial)
-7. [Criar token de projeto](#7️⃣-criar-token-de-projeto)
+7. [Criar projeto](#7️⃣-criar-projeto)
 8. [Executar análise SAST com sonar-scanner (Docker)](#8️⃣-executar-análise-sast-com-sonar-scanner-docker)
 9. [Parar, limpar e recomeçar](#9️⃣-parar-limpar-e-recomeçar)
 10. [Resolução de problemas](#🔟-resolução-de-problemas)
@@ -171,7 +171,7 @@ Notas importantes:
 * A flag `--network web-app-network` permite o scanner comunicar com o contêiner `sonarqube` pelo nome `bca-sonarqube:9000`.
 * Ajusta a versão de Python ou adiciona outras linguagens via propriedades `-Dsonar.language` quando aplicável.
 
-### 8.3 Ver resultados
+### 8.2 Ver resultados
 
 * Acompanhar o log do scanner: sairá no terminal.
 * Abrir `http://localhost:9000/projects` e selecionar o projeto para ver issues, métricas e cobertura.
