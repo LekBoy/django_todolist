@@ -5,53 +5,29 @@ on:
     types: [published]
 
 jobs:
-  build-and-push-ci:
+  unit-tests:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          python-version: '3.12'
 
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          platforms: linux/amd64
-          tags: |
-            ejst/django_todolist:latest
-            ejst/django_todolist:${{ github.event.release.tag_name }}
-          cache-from: type=registry,ref=ejst/django_todolist:buildcache
-          cache-to: type=registry,ref=ejst/django_todolist:buildcache,mode=max
-    
-    
-  deploy-to-server-cd:
-    runs-on: ubuntu-latest
-    needs: build-and-push-ci
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    steps:
-      - name: Prepare SSH key
+      - name: Run tests
+        #env:
+        #  DJANGO_SETTINGS_MODULE: config.settings
         run: |
-            mkdir -p ~/.ssh
-            echo "${{ secrets.DO_SSH_PRIVATE_KEY_B64 }}" | base64 -d > ~/.ssh/id_key
-            chmod 600 ~/.ssh/id_key
-      - name: Deploy via SSH (docker compose pull && up -d)
-        run: |
-            ssh -i ~/.ssh/id_key -o StrictHostKeyChecking=no ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
-            set -euo pipefail
-            cd "${{ secrets.DO_APP_PATH }}"
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker compose ps
-            docker image prune -f
-            EOF
+          python manage.py test apps.tasks.uni_test.TaskListSecurityTest.test_task_list_sql_injection_in_title -v 2
+          python manage.py test apps.tasks.uni_test.DeleteTaskSecurityTest.test_usuario_intruso_nao_deleta_task_de_outro -v 2
+        # python todolist_project/manage.py test todolist_project
+          
+    
