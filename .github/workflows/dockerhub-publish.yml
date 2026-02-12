@@ -56,6 +56,29 @@ jobs:
                   ${{ secrets.DOCKERHUB_USERNAME }}/django_todolist:latest
                   ${{ secrets.DOCKERHUB_USERNAME }}/django_todolist:${{ github.event.release.tag_name }}
                 cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/django_todolist:buildcache
-                cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/django_todolist:buildcache,mode=max    
+                cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/django_todolist:buildcache,mode=max 
+
+                    
+    
+  deploy-to-server-cd:
+    runs-on: ubuntu-latest
+    needs: build-and-push-ci
+
+    steps:
+      - name: Prepare SSH key
+        run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.DO_SSH_PRIVATE_KEY_B64 }}" | base64 -d > ~/.ssh/id_key
+            chmod 600 ~/.ssh/id_key
+      - name: Deploy via SSH (docker compose pull && up -d)
+        run: |
+            ssh -i ~/.ssh/id_key -o StrictHostKeyChecking=no ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
+            set -euo pipefail
+            cd "${{ secrets.DO_APP_PATH }}"
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker compose ps
+            docker image prune -f
+            EOF
                 
       
