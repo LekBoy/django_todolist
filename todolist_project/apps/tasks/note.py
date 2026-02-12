@@ -5,10 +5,11 @@ def task_list(request):
     title = request.GET.get('title')
     tasks = Task.objects.filter(owner=request.user)
     
+    
     if status == 'done':
         tasks = tasks.filter(is_done=True)
     elif status == 'pending':
-        tasks = tasks.filter(is_done=False)
+        tasks = tasks.filter(is_done=False)  
 
     if title:
         tasks = tasks.filter(title__icontains=title)
